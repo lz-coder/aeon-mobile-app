@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-expo-app01",
-    "slug": "rn-expo-app01",
+    "name": "aeon-mobile-app",
+    "slug": "aeon-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.rnexpoapp01"
     },
     "web": {
       "bundler": "metro",

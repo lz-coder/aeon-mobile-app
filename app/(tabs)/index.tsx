@@ -1,49 +1,88 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, View } from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from "@/components/HelloWave";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+
+import BoxIcon from "../../assets/images/box-icon.svg";
+import CubeIcon from "../../assets/images/cube-icon.svg";
+import RepairingIcon from "../../assets/images/repairing-icon.svg";
+import CompareArrowIcon from "../../assets/images/compare-arrow-icon.svg";
+
+const features = [
+  {
+    logo: RepairingIcon,
+    title: "Automated Maintenance",
+    text: "Daily system updates happen automatically while you work. Your running system is not affected until you reboot, keeping your workday consistent and avoiding any unexpected issues with your apps. ",
+  },
+  {
+    logo: CompareArrowIcon,
+    title: "Minimal Yet Functional",
+    text: 'The base system is kept small and simple, but with everything you need for getting straight on with your tasks - including programming, gaming, media production and clerical work. ',
+  },
+  {
+    logo: BoxIcon,
+    title: "Distrobox",
+    text: "Aeon ships with Distrobox configured to launch Tumbleweed containers, perfect for your development tools and projects."
+  },
+  {
+    logo: CubeIcon,
+    title: "Flatpak",
+    text: "Flatpak is set up ready for you to find your favourite apps from flathub."
+  }
+];
 
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: "#009B77", dark: "#009B77" }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require("@/assets/images/Aeon-round-logo.png")}
           style={styles.reactLogo}
         />
-      }>
+      }
+    >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
+        <ThemedText type="title">Aeon Desktop</ThemedText>
+        <ThemedText
+          type="default"
+          style={{ fontSize: 18, textAlign: "center" }}
+        >
+          The Linux Desktop for people who want to "get stuff done"
         </ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
+      {features.map((feature, index) => (
+        <ThemedView style={styles.stepContainer} key={index}>
+          <View style={styles.featureCard}>
+            <feature.logo style={styles.featureLogo} />
+            <ThemedText type="subtitle">{feature.title}</ThemedText>  
+          </View>
+          <ThemedText type="default">
+            {feature.text}
+          </ThemedText>
+        </ThemedView>
+      ))}
+      <ThemedView style={styles.infosCardWho}>
+        <ThemedText type="subtitle" style={{textAlign: 'center', fontSize: 24,}}>Who Is Aeon For?</ThemedText>
+        <ThemedText type="default">
+          Aeon is great for anyone who wants a computer that "just works"; in particular it is perfect for the "lazy developer" who prefers to spend their time getting things done while letting their desktop take care of itself. The OS is static, automated and reliable, letting you focus on your apps and work.
         </ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+      <ThemedView style={styles.infosCardTU}>
+        <ThemedText type="subtitle" style={{textAlign: 'center', fontSize: 24, color: '#383838'}}>Transactional Updates</ThemedText>
+        <ThemedText type="default" style={{color: '#383838'}}>
+          - Aeon makes use of transactional-update to provide atomic updates utilising the power of btrfs snapshots. Your system is updated inside a new snapshot leaving your current system unaffected. 
+        </ThemedText>
+        <ThemedText type="default" style={{color: '#383838'}}>
+          - If an update should fail for any reason the new snapshot can be discarded, ensuring your system remains bootable and functional regardless. 
+        </ThemedText>
+        <ThemedText type="default" style={{color: '#383838'}}>
+          -  Snapshots contain your configuration in /etc, allowing you to rollback configuration changes too. 
+        </ThemedText>
+        <ThemedText type="default" style={{color: '#383838'}}>
+          -  Your current RPM packages are supported by transactional-update, as well as most of the packages in Aeon's repos. 
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
@@ -52,19 +91,37 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
     gap: 8,
+    marginBottom: 12
   },
   stepContainer: {
     gap: 8,
-    marginBottom: 8,
+    marginBottom: 20,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+    height: 150,
+    width: 150,
+    margin: "auto",
   },
+  featureCard: {
+    gap: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  featureLogo: {
+    maxHeight: 50
+  },
+  infosCardWho: {
+    backgroundColor: '#383838',
+    borderRadius: 5,
+    padding: 12
+  },
+  infosCardTU: {
+    backgroundColor: '#4CB99F',
+    borderRadius: 5,
+    padding: 12
+  }
 });
